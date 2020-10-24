@@ -4,7 +4,10 @@ import { connect } from 'react-redux'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import Background from '../../../assets/login.jpg'
 import { save_user, save_token } from '../../../reducer/user/action'
+// import axios from '../../../utils/request'
+import { encryption, decryption } from '../../../utils'
 import './login.less'
+import Axios from 'axios'
 const bannerStyle = {
   width: '100%',
   height: '100%',
@@ -28,10 +31,23 @@ class Login extends Component {
   onFinish = values => {
     console.log('Success:', values);
     const { history, saveUser, saveToken } = this.props
-    sessionStorage.setItem('HQJ_token',values.password)
-    saveUser(values)
-    saveToken(values)
-    history.push('/')
+    const obj = encryption({
+      data:{ username: values.username, password: values.password },
+      key: 'hqj',
+      param: ['password']
+    })
+    console.log('HQJ_token---', obj)
+    const dec = decryption({
+      data:{ username: values.username, password: obj.password },
+      key: 'hqj',
+      param: ['password']
+    })
+    // saveUser(values)
+    // saveToken(values)
+    Axios.get('/api/sys/users', {params: obj}).then(res => {
+      console.log('res===', res)
+      // history.push('/')
+    })
   }
   componentDidMount () {
     const user = localStorage.getItem('persist:root')
