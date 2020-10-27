@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Form, Input, Button, Checkbox } from 'antd'
+import { Form, Input, Button, Checkbox, notification } from 'antd'
 import { connect } from 'react-redux'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import Background from '../../../assets/login.jpg'
-import { save_user, save_token } from '../../../reducer/user/action'
+import { save_user, save_token, login_action } from '../../../reducer/user/action'
 // import axios from '../../../utils/request'
 import { encryption, decryption } from '../../../utils'
 import './login.less'
@@ -29,24 +29,32 @@ class Login extends Component {
     };
   }
   onFinish = values => {
-    console.log('Success:', values);
-    const { history, saveUser, saveToken } = this.props
-    const obj = encryption({
-      data:{ username: values.username, password: values.password },
-      key: 'hqj',
-      param: ['password']
-    })
-    console.log('HQJ_token---', obj)
-    const dec = decryption({
-      data:{ username: values.username, password: obj.password },
-      key: 'hqj',
-      param: ['password']
-    })
+    console.log('Success:', values, this.props);
+    const { history, saveUser, saveToken, loginAction } = this.props
+    // const obj = encryption({
+    //   data:{ username: values.username, password: values.password },
+    //   key: 'hqj',
+    //   param: ['password']
+    // })
+    // console.log('HQJ_token---', values)
     // saveUser(values)
     // saveToken(values)
-    Axios.get('/api/sys/users', {params: obj}).then(res => {
-      console.log('res===', res)
-      // history.push('/')
+    // const res = loginAction(values)
+    Axios.get('/api/sys/users', { params: { username: values.username, password: values.password }}).then(({ data }) => {
+      console.log('res===', data)
+      let { code, msg } = data
+      if (code === 0) {
+        console.log('res===', code)
+        notification.success({
+          message: msg,
+        })
+        // sessionStorage.setItem('HQJ_token', )
+        history.push('/sys/home')
+      } else {
+        notification.error({
+          message: msg,
+         })
+      }
     })
   }
   componentDidMount () {
@@ -118,6 +126,9 @@ const mapDispatchToProps = dispatch => {
     },
     saveToken (val) {
       dispatch(save_token(val))
+    },
+    loginAction (val) {
+      dispatch(login_action(val))
     }
   }
 }

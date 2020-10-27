@@ -6,3 +6,7 @@ export const save_user = (user) => {
 export const save_token = (token) => {
   return { type: 'SAVE_TOKEN', data: token }
 }
+
+export const login_action = (parmas) => {
+  return { type: 'LOGIN', data: parmas }
+}

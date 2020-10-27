@@ -18,6 +18,12 @@ const reducer = (state = userState, action) => {
         ...state,
         token: action.data.password
       }
+    case 'LOGIN':
+      console.log('LOGIN---', action)
+      return {
+        ...state,
+        data: action.data
+      }
     default:
       return state
   }

@@ -109,7 +109,7 @@ class Home extends Component {
           首页----{num} ----- <button onClick={this.addnum}>+</button>
         </h1>
         <h2>当前登录的用户名是---{username}</h2>
-        <JTable {...tableConfig} />,
+        {/* <JTable {...tableConfig} />, */}
       </>
     )
   }
