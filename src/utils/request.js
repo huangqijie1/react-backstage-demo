@@ -1,6 +1,8 @@
 import axios from 'axios'
 import history from './history'
 import { notification } from 'antd';
+import store from '../store'
+import { spinning } from '../reducer/app/action'
 const errorCode = {
   '000': '操作太频繁，请勿重复请求',
   '200': '操作成功',
@@ -27,7 +29,9 @@ const service = axios.create({
 
 // 请求拦截
 service.interceptors.request.use(config => {
-  console.log('request---',config)
+  // const { app } = store.getState()
+  store.dispatch(spinning(true))
+  console.log('store===----', store)
   const token = sessionStorage.getItem('HQJ_token')
   if (token) {
     config.headers['Authorization'] = 'HQJ' + token
@@ -37,7 +41,9 @@ service.interceptors.request.use(config => {
 
 // 响应拦截
 service.interceptors.response.use(response => {
-  console.log('response---',response)
+  store.dispatch(spinning(false))
+  const { app } = store.getState()
+  console.log('response---', app, response)
   const message = response.data.msg || errorCode[response.status] || errorCode['default']
   if (response.status === 401) {
     notification.error({

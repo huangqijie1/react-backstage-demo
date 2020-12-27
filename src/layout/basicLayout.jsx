@@ -19,11 +19,12 @@ class BasicLayout extends Component {
     console.log('coll===',this.props)
   };
   componentDidMount () {
+    console.log('111111111===')
     const { history } = this.props
-    // const token = sessionStorage.getItem('HQJ_token') // 如果没登录，跳转到登录页面
-    // if (!token) {
-    //   history.push('/login')
-    // } 
+    const token = sessionStorage.getItem('HQJ_token') // 如果没登录，跳转到登录页面
+    if (!token) {
+      history.push('/login')
+    } 
   }
   render() {
     return (

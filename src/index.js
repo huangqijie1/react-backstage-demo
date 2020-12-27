@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-
+import $axios from './utils/request'
+React.$axios = $axios
 ReactDOM.render(
   <App />,
   document.getElementById('root')
