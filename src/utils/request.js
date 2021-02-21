@@ -31,7 +31,6 @@ const service = axios.create({
 service.interceptors.request.use(config => {
   // const { app } = store.getState()
   store.dispatch(spinning(true))
-  console.log('store===----', store)
   const token = sessionStorage.getItem('HQJ_token')
   if (token) {
     config.headers['Authorization'] = 'HQJ' + token
@@ -43,7 +42,6 @@ service.interceptors.request.use(config => {
 service.interceptors.response.use(response => {
   store.dispatch(spinning(false))
   const { app } = store.getState()
-  console.log('response---', app, response)
   const message = response.data.msg || errorCode[response.status] || errorCode['default']
   if (response.status === 401) {
     notification.error({

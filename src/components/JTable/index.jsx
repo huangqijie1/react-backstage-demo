@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { Table } from 'antd'
 class JTable extends Component {
   constructor(props) {
-    super(props)
+    super(...props)
     this.state = {
       
     };

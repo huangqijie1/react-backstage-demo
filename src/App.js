@@ -10,8 +10,6 @@ import BasicLayout from './layout/basicLayout'
 import Login from '@/views/system/login'
 const persistor = persistStore(store)
 function App() {
-  const states = store.getState()
-  console.log('store---', states)
   return (
     <div className="App">
       <Provider store={store}>
