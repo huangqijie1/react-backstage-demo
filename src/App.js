@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Switch, Route, Redirect } from 'react-router-dom'
+import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { persistStore } from 'redux-persist'
 import {PersistGate} from 'redux-persist/integration/react';
@@ -14,13 +14,13 @@ function App() {
     <div className="App">
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <HashRouter>
+          <Router>
             <Switch>
               <Route exact path='/' render={() => <Redirect to="/sys/home" />} />
               <Route path='/sys' component={BasicLayout} />
               <Route path='/login' component={Login} />
             </Switch>
-          </HashRouter>
+          </Router>
         </PersistGate>
       </Provider>
     </div>
