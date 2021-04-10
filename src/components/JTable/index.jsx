@@ -9,7 +9,6 @@ class JTable extends Component {
     };
 }
   render () {
-    console.log('props===---', this.props)
     return (
       <Table {...this.props} />
     )

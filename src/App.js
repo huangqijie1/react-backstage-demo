@@ -9,6 +9,10 @@ import './App.css';
 import BasicLayout from './layout/basicLayout'
 import Login from '@/views/system/login'
 const persistor = persistStore(store)
+function isLogin () {
+  const token = sessionStorage.getItem('HQJ_token');
+  return token;
+}
 function App() {
   return (
     <div className="App">
@@ -16,8 +20,8 @@ function App() {
         <PersistGate loading={null} persistor={persistor}>
           <Router>
             <Switch>
-              <Route exact path='/' render={() => <Redirect to="/sys/home" />} />
-              <Route path='/sys' component={BasicLayout} />
+              <Route exact path='/' render={() => <Redirect to="/views/sys/home" />} />
+              <Route path='/views' render={() => isLogin() ? <BasicLayout/> : <Redirect to="/login" />}/>
               <Route path='/login' component={Login} />
             </Switch>
           </Router>

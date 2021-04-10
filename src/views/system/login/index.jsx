@@ -50,7 +50,7 @@ class Login extends Component {
         saveUser(values)
         saveToken(values)
         sessionStorage.setItem('HQJ_token', obj.password)
-        history.push('/sys/home')
+        history.push('/views/sys/home')
       } else {
         notification.error({
           message: msg,
